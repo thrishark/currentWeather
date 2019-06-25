@@ -1,0 +1,53 @@
+<html>
+<script>
+
+function getTemp(){
+var city=document.getElementById("city").value;
+if(city  != ""){
+
+var ourRequest = new XMLHttpRequest();
+
+ourRequest.open('GET','https://api.openweathermap.org/data/2.5/weather?q='+city+'&units=metric&APPID=6aef0e4de9cabe9ae3e205d0e605334d' );
+
+ourRequest.send();
+fetch('https://api.openweathermap.org/data/2.5/weather?q='+city+'&units=metric&APPID=6aef0e4de9cabe9ae3e205d0e605334d').then(response => {
+  return response.json();
+}).then(data => {
+  console.log(data);
+document.getElementById("description").innerHTML=data.weather[0].description;
+document.getElementById("climate").innerHTML="Climate in "+city.toUpperCase()+ " is :";
+ document.getElementById("temperature").innerHTML="Temperature is " + data.main.temp+"°C";
+}).catch(err => {
+  console.log('fml');
+});
+
+}
+}
+</script>
+
+
+<style>
+
+#city, h3{
+display: inline;
+}
+</style>
+
+
+<body bgcolor="#87b0f2">
+<br>
+<h1 align="center">WEATHER INFORMATION</h1>
+<div align="center">
+<h3>CITY :&nbsp</h3> <input type="text" name="city" id="city">
+<br> <br>
+<input type="button" value="GET TEMPERATURE" onclick="getTemp()">
+<br>
+<br>  <br><br> 
+<h1 id="climate"></h1>
+<br> <br>
+<h1 id="description"></h1>
+<br>  <br>
+<h1 id="temperature"></h1>
+</div>
+</body>
+</html>
